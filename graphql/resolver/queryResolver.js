@@ -1,4 +1,5 @@
 const userModels = require('../../model/users');
+const chatRoom = require('../../model/chatRoom');
 
 module.exports = {
     RootQuery: {
@@ -8,6 +9,16 @@ module.exports = {
                 return getUser;
             } catch (error) {
                 return error;
+            }
+        },
+        AllRooms: async() => {
+            try{
+                const result = await chatRoom.find();
+                return result;
+            }
+            catch(err)
+            {
+                throw err;
             }
         }
     }
