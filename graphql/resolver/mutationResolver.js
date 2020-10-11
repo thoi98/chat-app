@@ -27,24 +27,6 @@ module.exports = {
         return error;
       }
     },
-    deleteUser: async (parent, args, ctx, info) => {
-      let responseMSG = {};
-      try {
-        let query = { username: args.username };
-        const createUserDetails = await userModels.findOneAndDelete(query);
-        console.log("createUserDetails--------------------", createUserDetails);
-        if (createUserDetails == null) {
-          responseMSG.response = "No User found for this opertaion";
-          return responseMSG;
-        } else {
-          responseMSG.response = "Success";
-          return responseMSG;
-        }
-      } catch (error) {
-        responseMSG.response = "Fail";
-        return responseMSG;
-      }
-    },
     createRoom: async (parent, { name }, ctx, info) => {
       try {
         const room = new chatRoom({

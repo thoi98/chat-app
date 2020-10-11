@@ -11,24 +11,17 @@ input userInput{
     email: String!
     password: String!
 }
-type RootQuery {
-    userList: [userData!]!
-    AllRooms: [chatRoom!]!
-}
-type DeleteRes{
-    response:String!
-}
-
 type chatRoom{
     _id: ID!
     name: String!
     chat: [String!]!
 }
-
-
+type RootQuery {
+    userList: [userData!]!
+    AllRooms: [chatRoom!]!
+}
 type RootMutation {
     createUser(newUser: userInput): userData!
-    deleteUser(username: String!): DeleteRes!
     createRoom(name: String!): chatRoom!
     sendMessage(roomId: String!,msg: String!): String!
 }
