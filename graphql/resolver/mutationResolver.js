@@ -15,7 +15,7 @@ module.exports = {
             "This email is already registered to an existing user."
           );
         }
-        const hashedPassword = bcrypt.hash(args.newUser.password, 12);
+        const hashedPassword = await bcrypt.hash(args.newUser.password, 12);
         const User = new userModels({
           username: args.newUser.username,
           email: args.newUser.email,
