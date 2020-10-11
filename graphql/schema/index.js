@@ -3,17 +3,13 @@ module.exports = `
 type userData {
     _id: ID!
     username: String!
-    age: Int!
-    blood_group: String!
-    nationality: String!
-    contact_no: Int!
+    email: String!
+    password: String!
 }
 input userInput{
     username: String!
-    age: Int!
-    blood_group: String!
-    nationality: String!
-    contact_no: Int!
+    email: String!
+    password: String!
 }
 type RootQuery {
     userList: [userData!]!
