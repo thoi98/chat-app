@@ -16,9 +16,16 @@ type chatRoom{
     name: String!
     chat: [String!]!
 }
+type authData
+{
+    userId: ID!
+    token: String!
+    tokenExpiration: Int!
+}
 type RootQuery {
     userList: [userData!]!
     AllRooms: [chatRoom!]!
+    login(email: String! ,password: String!): authData!
 }
 type RootMutation {
     createUser(newUser: userInput): userData!

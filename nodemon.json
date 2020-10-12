@@ -1,4 +1,5 @@
 {
     "env": {
+        "SECRET_KEY": "5eeaccd5f07468b4309a2971d613970d04a98065797d6bdafe13580df91fd4aeff0a2ab68e49328aed5135967bcccb0d1ffdaf07de47d058234534a52743f161"
     }
 }
