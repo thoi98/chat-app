@@ -1,5 +1,5 @@
-const { PubSub } = require('graphql-yoga');
+const { PubSub } = require("graphql-yoga");
 const pubsub = new PubSub();
 module.exports = {
-    pubsub
-}
+    pubsub,
+};
