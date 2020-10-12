@@ -5,9 +5,9 @@ const bcrypt = require("bcryptjs");
 
 module.exports = {
     RootQuery: {
-        userList: async (_, __, ctx) => {
+        userList: async (_, __, { req }) => {
             try {
-                if (!ctx.req.isAuth) {
+                if (!req.isAuth) {
                     throw new Error("Not logged in.");
                 }
                 const getUser = await userModels.find();

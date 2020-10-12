@@ -1,4 +1,4 @@
-const express = require("express");
+//const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const typeDefs = require("./graphql/schema/index");
@@ -6,11 +6,11 @@ const resolvers = require("./graphQL/resolver/index");
 const { GraphQLServer } = require("graphql-yoga");
 const authware = require("./middleware/authware");
 
-const app = express();
+//const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(authware);
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(authware);
 
 mongoose
     .connect(
@@ -32,7 +32,15 @@ mongoose
 const server = new GraphQLServer({
     typeDefs,
     resolvers,
+    context: ({ request, response }) => {
+        return { req: request, res: response };
+    },
 });
+
+server.express.use(authware);
+server.express.use(bodyParser.json());
+server.express.use(bodyParser.urlencoded({ extended: false }));
+
 server.start(() => {
     console.log("GraphQL Listening on port 4000");
 });
