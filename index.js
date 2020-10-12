@@ -1,16 +1,9 @@
-//const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const typeDefs = require("./graphql/schema/index");
 const resolvers = require("./graphQL/resolver/index");
 const { GraphQLServer } = require("graphql-yoga");
 const authware = require("./middleware/authware");
-
-//const app = express();
-
-//app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(authware);
 
 mongoose
     .connect(
