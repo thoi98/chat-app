@@ -34,6 +34,11 @@ server.express.use(authware);
 server.express.use(bodyParser.json());
 server.express.use(bodyParser.urlencoded({ extended: false }));
 
-server.start(() => {
-    console.log("GraphQL Listening on port 4000");
-});
+server.start(
+    {
+        port: 7777,
+    },
+    ({ port }) => {
+        console.log("GraphQL Listening on port:", port);
+    }
+);
