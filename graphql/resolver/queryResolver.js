@@ -41,7 +41,7 @@ module.exports = {
                     { userId: existingUser.id, email: existingUser.email },
                     process.env.SECRET_KEY,
                     {
-                        expiresIn: "15s",
+                        expiresIn: "15m",
                     }
                 );
                 return {

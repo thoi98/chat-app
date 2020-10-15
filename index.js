@@ -37,6 +37,11 @@ server.express.use(bodyParser.urlencoded({ extended: false }));
 server.start(
     {
         port: 7777,
+        subscriptions: {
+            onConnect: (params, wSocket, ctx) => {
+                ctx.req.test = "Works";
+            },
+        },
     },
     ({ port }) => {
         console.log("GraphQL Listening on port:", port);
