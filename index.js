@@ -27,7 +27,7 @@ const server = new GraphQLServer({
     resolvers,
     context: ({ request, response }) => {
         return { req: request, res: response };
-    },
+    }
 });
 
 server.express.use(authware);

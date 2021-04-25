@@ -16,9 +16,9 @@ module.exports = {
                 return error;
             }
         },
-        AllRooms: async () => {
+        AllRooms: async (_,{offset,limit}) => {
             try {
-                const result = await chatRoom.find();
+                const result = await chatRoom.find().skip();
                 return result;
             } catch (err) {
                 throw err;
