@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-/* defining users Schema */
+/* defining chatRoom Schema */
 const chatRoom = new Schema({
     name: {
         type: String,

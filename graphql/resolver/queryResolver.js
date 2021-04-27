@@ -2,6 +2,7 @@ const userModels = require("../../model/users");
 const chatRoom = require("../../model/chatRoom");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 module.exports = {
     RootQuery: {
@@ -16,11 +17,34 @@ module.exports = {
                 return error;
             }
         },
-        AllRooms: async (_,{offset,limit}) => {
+        AllRooms: async (_,{cursor=null,limit=2}) => {
             try {
-                const result = await chatRoom.find().skip();
-                return result;
+                if(cursor!=null)
+                {
+                    let result = await chatRoom.find({'_id':{'$lt':cursor}}).limit(limit).sort({'_id':-1});
+                    return result;
+                }
+                else
+                {
+                    console.log("No cursor");
+                    let result = await chatRoom.find().limit(limit);
+                    return result;
+                }
             } catch (err) {
+                throw err;
+            }
+        },
+        getChat: async (_,{roomId}) => {
+            try{
+                console.log(roomId);
+                let size = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{chat:{$size:'$chat'}}}]);
+                console.log('get chat called');
+                console.log(size);
+                //const result = await chatRoom.find({'_id':roomId},{'chat':});
+                throw new Error("get chat ERROR");
+            }
+            catch(err)
+            {
                 throw err;
             }
         },

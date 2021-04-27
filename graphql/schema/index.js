@@ -16,6 +16,10 @@ type chatRoom{
     name: String!
     chat: [String!]!
 }
+type chatData{
+    chat: [String!]!
+    count: Int!
+}
 type authData
 {
     userId: ID!
@@ -24,8 +28,9 @@ type authData
 }
 type RootQuery {
     userList: [userData!]!
-    AllRooms: [chatRoom!]!
+    AllRooms(cursor:ID ,limit:Int): [chatRoom!]!
     login(email: String! ,password: String!): authData!
+    getChat(roomId:ID):chatData!
 }
 type RootMutation {
     createUser(newUser: userInput): userData!
