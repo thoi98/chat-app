@@ -12,6 +12,6 @@ module.exports = {
             subscribe: withFilter(() => pubsub.asyncIterator('newMessage'), (payload, variables) => {
                 return payload.chatRoom === variables.chatRoom;
               })
-        }
+        },
     }
 }

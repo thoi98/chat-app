@@ -19,6 +19,8 @@ type chatRoom{
 type chatData{
     chat: [String!]!
     count: Int!
+    first: Int
+    last: Int
 }
 type authData
 {
@@ -30,7 +32,7 @@ type RootQuery {
     userList: [userData!]!
     AllRooms(cursor:ID ,limit:Int): [chatRoom!]!
     login(email: String! ,password: String!): authData!
-    getChat(roomId:ID):chatData!
+    getChat(roomId:ID! ,cursor:Int ,psize:Int ,old:Boolean):chatData!
 }
 type RootMutation {
     createUser(newUser: userInput): userData!

@@ -17,7 +17,7 @@ module.exports = {
                 return error;
             }
         },
-        AllRooms: async (_,{cursor=null,limit=2}) => {
+        AllRooms: async (_,{cursor=null,limit=2},{req}) => {
             try {
                 if(cursor!=null)
                 {
@@ -27,21 +27,40 @@ module.exports = {
                 else
                 {
                     console.log("No cursor");
-                    let result = await chatRoom.find().limit(limit);
+                    let result = await chatRoom.find().limit(limit).sort({'_id':-1});
                     return result;
                 }
             } catch (err) {
                 throw err;
             }
         },
-        getChat: async (_,{roomId}) => {
+        getChat: async (_,{roomId,cursor=null,psize=3,old=true}) => {
             try{
-                console.log(roomId);
-                let size = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{chat:{$size:'$chat'}}}]);
                 console.log('get chat called');
-                console.log(size);
-                //const result = await chatRoom.find({'_id':roomId},{'chat':});
-                throw new Error("get chat ERROR");
+                if(cursor==null)
+                {
+                    let result = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{count:{$size:'$chat'},chat:{$slice:['$chat',-psize]}}}]);
+                    result[0].first=result[0].count-1;
+                    result[0].last=result[0].count-psize;
+                    console.log(result[0]);
+                    return result[0];
+                }
+                else{
+                    let pos;
+                    (old?(
+                        pos=(0>cursor-psize?(0):(cursor-psize))
+                    ):(
+                        pos=cursor+1
+                    ))
+                    let result = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{count:{$size:'$chat'},chat:{$slice:['$chat',pos,psize]}}}]);
+                    (old?(
+                        result[0].last = pos
+                    ):(
+                        result[0].first = (cursor+psize>result[0].count-1?(cursor+psize):(result[0].count-1))
+                    ))
+                    console.log(result[0]);
+                    return result[0];
+                }
             }
             catch(err)
             {
@@ -65,7 +84,7 @@ module.exports = {
                     { userId: existingUser.id, email: existingUser.email },
                     process.env.SECRET_KEY,
                     {
-                        expiresIn: "15s",
+                        expiresIn: "15m",
                     }
                 );
                 return {

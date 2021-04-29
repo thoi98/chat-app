@@ -5,6 +5,8 @@ const resolvers = require("./graphQL/resolver/index");
 const { GraphQLServer } = require("graphql-yoga");
 const authware = require("./middleware/authware");
 
+const {pubsub} = require("./graphql/helper");
+
 mongoose
     .connect(
         "mongodb+srv://" +
@@ -25,15 +27,32 @@ mongoose
 const server = new GraphQLServer({
     typeDefs,
     resolvers,
-    context: ({ request, response }) => {
-        return { req: request, res: response };
-    }
+    context: ({ request, response ,connection }) => {
+        if(connection)
+        {
+            connection.variables={user:'Admin'};
+            connection.context="Admin";
+        }
+        return { req: request, res: response};
+    },
 });
 
 server.express.use(authware);
 server.express.use(bodyParser.json());
 server.express.use(bodyParser.urlencoded({ extended: false }));
 
-server.start(() => {
-    console.log("GraphQL Listening on port 4000");
+
+const options = {
+    subscriptions: {
+        onConnect: async (connectionParams,ws,context) => {
+            console.log("CONNECTED");
+        },
+        onDisconnect: () => {
+            console.log("DISCONNECTED");
+        }
+    },
+}
+
+server.start(options,({port}) => {
+    console.log(`GraphQL Listening on port ${port}`);
 });
