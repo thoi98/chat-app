@@ -42,7 +42,7 @@ module.exports = {
                     let result = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{count:{$size:'$chat'},chat:{$slice:['$chat',-psize]}}}]);
                     result[0].first=result[0].count-1;
                     result[0].last=result[0].count-psize;
-                    console.log(result[0]);
+                    //console.log(result[0]);
                     return result[0];
                 }
                 else{
@@ -58,7 +58,7 @@ module.exports = {
                     ):(
                         result[0].first = (cursor+psize<result[0].count-1?(cursor+psize):(result[0].count-1))
                     ))
-                    console.log(result[0]);
+                    console.log("Cursor:",cursor);
                     return result[0];
                 }
             }
