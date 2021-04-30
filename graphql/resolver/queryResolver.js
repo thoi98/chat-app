@@ -56,7 +56,7 @@ module.exports = {
                     (old?(
                         result[0].last = pos
                     ):(
-                        result[0].first = (cursor+psize>result[0].count-1?(cursor+psize):(result[0].count-1))
+                        result[0].first = (cursor+psize<result[0].count-1?(cursor+psize):(result[0].count-1))
                     ))
                     console.log(result[0]);
                     return result[0];
