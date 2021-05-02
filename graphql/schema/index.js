@@ -38,6 +38,7 @@ type RootMutation {
     createUser(newUser: userInput): userData!
     createRoom(name: String!): chatRoom!
     sendMessage(roomId: String!,msg: String!): String!
+    clearChat(roomId:String!): String
 }
 type Subscription{
     user: userData!

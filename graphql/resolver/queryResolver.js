@@ -36,9 +36,9 @@ module.exports = {
         },
         getChat: async (_,{roomId,cursor=null,psize=3,old=true}) => {
             try{
-                console.log('get chat called');
                 if(cursor==null)
                 {
+                    console.log('get chat called');
                     let result = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{count:{$size:'$chat'},chat:{$slice:['$chat',-psize]}}}]);
                     result[0].first=result[0].count-1;
                     result[0].last=result[0].count-psize;
@@ -58,7 +58,7 @@ module.exports = {
                     ):(
                         result[0].first = (cursor+psize<result[0].count-1?(cursor+psize):(result[0].count-1))
                     ))
-                    console.log("Cursor:",cursor);
+                    console.log(result[0],"Cursor:",cursor);
                     return result[0];
                 }
             }

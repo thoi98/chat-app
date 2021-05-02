@@ -55,5 +55,14 @@ module.exports = {
                 return err;
             }
         },
+        clearChat: async(_,{roomId}) => {
+            try{
+                var res;
+                await chatRoom.update({_id:roomId},{$pull:{chat:{$ne:0}}}).then(()=>{res = "Chat cleared";},()=>{res = "Chat couldn't be cleared";});
+                return res;
+            } catch(err){
+                return err;
+            }
+        },
     },
 };
