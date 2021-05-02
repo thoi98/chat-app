@@ -42,17 +42,19 @@ server.express.use(bodyParser.json());
 server.express.use(bodyParser.urlencoded({ extended: false }));
 
 
-const options = {
-    subscriptions: {
-        onConnect: async (connectionParams,ws,context) => {
-            console.log("CONNECTED");
-        },
-        onDisconnect: () => {
-            console.log("DISCONNECTED");
-        }
-    },
-}
+// const options = {
+//     subscriptions: {
+//         onConnect: async (connectionParams,ws,context) => {
+//             console.log("CONNECTED");
+//         },
+//         onDisconnect: () => {
+//             console.log("DISCONNECTED");
+//         }
+//     },
+// }
 
-server.start(options,({port}) => {
+const port = process.env.PORT || 4000;
+
+server.start(port,({port}) => {
     console.log(`GraphQL Listening on port ${port}`);
 });
