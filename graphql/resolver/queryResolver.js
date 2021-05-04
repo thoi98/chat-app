@@ -46,13 +46,17 @@ module.exports = {
                     return result[0];
                 }
                 else{
-                    let pos;
-                    (old?(
-                        pos=(0>cursor-psize?(0):(cursor-psize))
-                    ):(
-                        pos=cursor+1
-                    ))
-                    let result = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{count:{$size:'$chat'},chat:{$slice:['$chat',pos,psize]}}}]);
+                    let pos,page_size;
+                    if(old)
+                    {
+                        pos=(0>cursor-psize?(0):(cursor-psize));
+                        page_size=cursor-pos;
+                    }
+                    else{
+                        pos=cursor+1;
+                        page_size=psize;
+                    }
+                    let result = await chatRoom.aggregate([{$match:{_id:mongoose.Types.ObjectId(roomId)}},{$project:{count:{$size:'$chat'},chat:{$slice:['$chat',pos,page_size]}}}]);
                     (old?(
                         result[0].last = pos
                     ):(
