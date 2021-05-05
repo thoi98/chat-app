@@ -17,6 +17,7 @@ type chatRoom{
     chat: [String!]!
 }
 type chatData{
+    roomId: String
     chat: [String!]!
     count: Int!
     first: Int
@@ -42,7 +43,7 @@ type RootMutation {
 }
 type Subscription{
     user: userData!
-    newMessage(chatRoom: String!): String!
+    newMessage(chatRoom: ID!): String!
 }
 schema {
     query: RootQuery
