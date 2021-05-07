@@ -37,10 +37,7 @@ module.exports = {
 				throw err;
 			}
 		},
-		getChat: async (
-			_,
-			{ roomId, cursor = null, psize = 3, old = true }
-		) => {
+		getChat: async (_,{ roomId, cursor = null, psize = 3, old = true }) => {
 			try {
 				if (cursor == null) {
 					console.log("get chat called");
@@ -66,6 +63,10 @@ module.exports = {
 					} else {
 						pos = cursor + 1;
 						page_size = psize;
+					}
+					if(pos<0 || page_size<=0)
+					{
+						throw new Error("no more messages");
 					}
 					let result = await chatRoom.aggregate([
 						{ $match: { _id: mongoose.Types.ObjectId(roomId) } },
@@ -118,6 +119,9 @@ module.exports = {
 			} catch (err) {
 				throw err;
 			}
+		},
+		hey: async ()=>{
+			return "jude";
 		},
 	},
 };

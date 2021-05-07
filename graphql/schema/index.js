@@ -34,6 +34,7 @@ type RootQuery {
     AllRooms(cursor:ID ,limit:Int): [chatRoom!]!
     login(email: String! ,password: String!): authData!
     getChat(roomId:ID! ,cursor:Int ,psize:Int ,old:Boolean):chatData!
+    hey: String!
 }
 type RootMutation {
     createUser(newUser: userInput): userData!
@@ -43,7 +44,7 @@ type RootMutation {
 }
 type Subscription{
     user: userData!
-    newMessage(chatRoom: ID!): String!
+    newMessage(chatRoom: String!): String!
 }
 schema {
     query: RootQuery
